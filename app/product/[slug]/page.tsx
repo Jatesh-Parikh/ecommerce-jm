@@ -5,8 +5,10 @@ import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { Button } from "@/components/ui/button";
 import { Star, Truck } from "lucide-react";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(slug: string) {
+  noStore();
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
         _id,
         name,
@@ -22,8 +24,6 @@ async function getData(slug: string) {
 
   return data;
 }
-
-export const dynamic = "force dynamic";
 
 export default async function ProductPage({
   params,

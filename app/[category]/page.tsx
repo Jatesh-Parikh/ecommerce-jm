@@ -2,8 +2,10 @@ import Image from "next/image";
 import { simplifiedProduct } from "../interface";
 import { client } from "../lib/sanity";
 import Link from "next/link";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(category: string) {
+  noStore();
   const query = `*[_type == "product" && category->name == "${category}"] {
         _id,
         price,
@@ -17,8 +19,6 @@ async function getData(category: string) {
 
   return data;
 }
-
-export const dynamic = "force dynamic";
 
 export default async function CategoryPage({
   params,
